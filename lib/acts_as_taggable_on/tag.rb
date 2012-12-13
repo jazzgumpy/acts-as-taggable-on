@@ -18,7 +18,7 @@ module ActsAsTaggableOn
 
     def self.named(name)
       if ActsAsTaggableOn.strict_case_match
-        where(["name = #{binary}?", name])
+        where(["name = ?", name])
       else
         where(["lower(name) = ?", name.downcase])
       end
@@ -26,7 +26,7 @@ module ActsAsTaggableOn
 
     def self.named_any(list)
       if ActsAsTaggableOn.strict_case_match
-        where(list.map { |tag| sanitize_sql(["name = #{binary}?", tag.to_s.mb_chars]) }.join(" OR "))
+        where(list.map { |tag| sanitize_sql(["name = ?", tag.to_s.mb_chars]) }.join(" OR "))
       else
         where(list.map { |tag| sanitize_sql(["lower(name) = ?", tag.to_s.mb_chars.downcase]) }.join(" OR "))
       end
